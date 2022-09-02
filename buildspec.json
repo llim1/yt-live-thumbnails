@@ -1,10 +1,10 @@
 {
     "dependencies": {
         "obs-studio": {
-            "version": "28.0.0-beta1",
+            "version": "28.0.0",
             "repository": "https://github.com/obsproject/obs-studio.git",
             "branch": "master",
-            "hash": "43a49dca47344a5170159ef99b86b97f90d4e4ad"
+            "hash": "09da3ac4397ee9b1431c9c97cd2c71484b240382"
         },
         "prebuilt": {
             "version": "2022-08-02",
@@ -78,6 +78,6 @@
             "qtVersion": 6
         }
     },
-    "name": "obs-plugintemplate",
+    "name": "yt-live-thumbnails",
     "version": "1.0.0"
 }

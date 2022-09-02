@@ -2,19 +2,19 @@ cmake_minimum_required(VERSION 3.16...3.21)
 
 # Change obs-plugintemplate to your plugin's name in a machine-readable format (e.g.:
 # obs-myawesomeplugin) and set
-project(obs-plugintemplate VERSION 1.0.0)
+project(yt-live-thumbnails VERSION 1.0.0)
 add_library(${CMAKE_PROJECT_NAME} MODULE)
 
 # Replace `Your Name Here` with the name (yours or your organization's) you want to see as the
 # author of the plugin (in the plugin's metadata itself and in the installers)
-set(PLUGIN_AUTHOR "Your Name Here")
+set(PLUGIN_AUTHOR "Logan Lim")
 
 # Replace `com.example.obs-plugin-template` with a unique Bundle ID for macOS releases (used both in
 # the installer and when submitting the installer for notarization)
-set(MACOS_BUNDLEID "com.example.${CMAKE_PROJECT_NAME}")
+set(MACOS_BUNDLEID "com.gmail.loglim11.${CMAKE_PROJECT_NAME}")
 
 # Replace `me@contoso.com` with the maintainer email address you want to put in Linux packages
-set(LINUX_MAINTAINER_EMAIL "me@mymailhost.com")
+set(LINUX_MAINTAINER_EMAIL "loglim11@gmail.com")
 
 # Add your custom source files here - header files are optional and only required for visibility
 # e.g. in Xcode or Visual Studio
@@ -25,10 +25,8 @@ find_package(libobs REQUIRED)
 include(cmake/ObsPluginHelpers.cmake)
 
 # Uncomment these lines if you want to use the OBS Frontend API in your plugin
-#[[
 find_package(obs-frontend-api REQUIRED)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::obs-frontend-api)
-#]]
 
 # Uncomment those lines if you want to use Qt in your plugin
 #[[
@@ -83,3 +81,8 @@ endif()
 # --- End of section ---
 
 setup_plugin_target(${CMAKE_PROJECT_NAME})
+
+
+
+
+

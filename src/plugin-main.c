@@ -32,5 +32,5 @@ bool obs_module_load(void)
 
 void obs_module_unload()
 {
-	blog(LOG_INFO, "plugin unloaded");
+	blog(LOG_INFO, "plugin loaded successfully", NULL);
 }
