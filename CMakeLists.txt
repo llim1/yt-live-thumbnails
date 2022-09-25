@@ -20,7 +20,7 @@ set(LINUX_MAINTAINER_EMAIL "loglim11@gmail.com")
 # e.g. in Xcode or Visual Studio
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE 
   src/plugin-main.cpp
-  src/live-thumb-ui.h
+  src/live-thumb-ui.hpp
   src/live-thumb-ui.cpp
 )
 
@@ -83,6 +83,34 @@ endif()
 # --- End of section ---
 
 setup_plugin_target(${CMAKE_PROJECT_NAME})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

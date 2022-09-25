@@ -1,4 +1,4 @@
-#include "live-thumb-ui.h"
+#include "live-thumb-ui.hpp"
 
 #include <obs-frontend-api.h>
 #include <obs.h>
@@ -19,27 +19,31 @@ YTHWidget::YTHWidget(QWidget *parent) : QWidget(parent)
     // QGridLayout *topLayout = new QGridLayout();
     // QGridLayout *outputLayout = new QGridLayout();
 
+    // Add Image Label
+    imgLabel = new QLabel("thumbnail preview");
+    imgLabel->setText(QString("Thumbnail Preview"));
+    imgLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    imgLabel->setStyleSheet("QLabel { border: 1px solid white; border-radius: 5px; }");
+    imgLabel->setMinimumSize(320,240);
+    mainLayout->addWidget(imgLabel);
+
     // Test service name finding while live 
     // Create button, layout, and add it 
-    QPushButton *nameButton = new QPushButton(QString("Get Service/Output Name"));
+    QPushButton *testButton = new QPushButton(QString("Take Screenshot"));
     QHBoxLayout *buttonLayout = new QHBoxLayout; 
     buttonLayout->addStretch();
-    buttonLayout->addWidget(nameButton);
+    buttonLayout->addWidget(testButton);
 
     // Add properties button
     QPushButton *propButton = new QPushButton(QString("Get Properties"));
     buttonLayout->addWidget(propButton);
-
-    // Add Image Label
-    imgLabel = new QLabel("");
-    mainLayout->addWidget(imgLabel);
 
     // Add to main layout
     mainLayout->addLayout(buttonLayout);
     setLayout(mainLayout);
 
     // Connect buttons to functions
-    connect(nameButton, &QPushButton::clicked, this, &YTHWidget::getServiceName);
+    connect(testButton, &QPushButton::clicked, this, &YTHWidget::updateThumbnail);
     connect(propButton, &QPushButton::clicked, this, &YTHWidget::getServiceProperties);
 }
 
@@ -122,10 +126,24 @@ bool YTHWidget::takeSourceScreenshot(obs_source_t *source) {
     gs_texrender_destroy(texrender);
     obs_source_release(source);
     obs_leave_graphics();
-
-    image.save("C:/Users/Logan/Videos/Screenshot 2022-09-21 21-45-26.png");
-
+    
     return true;
+}
+
+void YTHWidget::updateThumbnail() {
+    // TESTING take screenshot
+    obs_source_t *source = obs_frontend_get_current_scene();
+    if(takeSourceScreenshot(source)) {
+        blog(LOG_INFO, "Screenshot taken!");
+
+        // TODO do this better - set scaling in a onResize type handler? 
+        QPixmap imgPreview = QPixmap::fromImage(image).scaled(imgLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        imgLabel->setPixmap(imgPreview);
+        
+    } else {
+        blog(LOG_INFO, "Could not take screenshot!");
+    }
+    obs_source_release(source);
 }
 
 void YTHWidget::getServiceName()
@@ -140,14 +158,6 @@ void YTHWidget::getServiceName()
         obs_service_get_password(serviceRef));
 
 	obs_service_release(serviceRef);
-
-    // TESTING take screenshot
-    obs_source_t *source = obs_frontend_get_current_scene();
-    if(takeSourceScreenshot(source)) {
-        blog(LOG_INFO, "Screenshot taken!");
-    } else {
-        blog(LOG_INFO, "Could not take screenshot!");
-    }
 }
 
 void YTHWidget::getServiceProperties() 

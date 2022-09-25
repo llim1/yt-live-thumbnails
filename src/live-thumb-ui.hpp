@@ -1,6 +1,6 @@
 #pragma once
 
-#include <obs.h>
+#include <obs.hpp>
 
 #include <QDockWidget> 
 #include <QImage>
@@ -10,6 +10,9 @@
 class YTHDock : public QDockWidget 
 {
     Q_OBJECT
+
+    // TODO Fully implement like UI/qt-display.hpp
+    OBSDisplay display;
 
 public: 
     inline YTHDock(QWidget *parent = nullptr) : QDockWidget(parent) {} 
@@ -21,16 +24,25 @@ class YTHWidget : public QWidget
 {
     Q_OBJECT 
 
-public:
-    QImage image;
-    QLabel *imgLabel = nullptr;
+    obs_display_t *display;
 
+public:
     YTHWidget(QWidget *parent = nullptr);
 
     // inline YTHWidget(QWidget *parent = nullptr) : QWidget(parent) {}
-    // ~YTHWidget();
+    ~YTHWidget() { display = nullptr; }
+
+    // uint32_t backgroundColorf = GREY_COLOR_BACKGROUND;
 
 private:
+    QImage image;
+    QLabel *imgLabel;
+
+    // void createDisplay(bool force = false);
+    // static void drawPreview(void *data, uint32_t cx, uint32_t cy);
+
+    // static void drawPreview(void *data, uint32_t cx, uint32_t cy);
+
     /**
      * @brief Take screenshot of specific source. This method duplicates 
      * functionality found in obs-studio's ScreenshotObj, minus the 
@@ -42,6 +54,7 @@ private:
      */
     bool takeSourceScreenshot(obs_source_t *source);
 
-   void getServiceName();
-   void getServiceProperties();
+    void updateThumbnail();
+    void getServiceName();
+    void getServiceProperties();
 };
